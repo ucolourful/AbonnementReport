@@ -1,3 +1,4 @@
+# coding=utf-8
 """AbonnementReport URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,9 +14,31 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import url
-from django.contrib import admin
+
+from AbonnementReport import view
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # 默认为登录界面
+    url(r"^$", view.login),
+    url(r"^login", view.login),
+
+    # 注册界面
+    url(r"^regist", view.regist),
+
+    # 用户登录
+    url(r"^userLogin", view.userLogin),
+
+    # 用户注册
+    url(r"^userRegist", view.userRegist),
+
+    # 主页面
+    url(r"^index", view.index),
+
+    # 退出登录
+    url(r"^logout", view.logout),
+
+    # 均不匹配，清理所有session，进入登录界面
+    url(r"^", view.logout),
 ]
