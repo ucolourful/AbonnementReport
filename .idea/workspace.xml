@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d0241e5-9941-471e-af58-56f689159655" name="Default Changelist" comment="[修改时间]：2018年11月1日00:11:56&#10;[修改原因]：创建工程git工程">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="8d0241e5-9941-471e-af58-56f689159655" name="Default Changelist" comment="[提交原因]：登录、注册功能完成，整改一次代码&#10;[提交时间]：2018年11月1日23:36:20&#10;[提交计划]：2018年11月2日完成首页部分功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
@@ -49,42 +48,32 @@
         <counts>
           <entry key="ico" value="1" />
           <entry key="js" value="1" />
-          <entry key="py" value="7" />
+          <entry key="py" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="1" />
           <entry key="JavaScript" value="1" />
-          <entry key="Python" value="7" />
+          <entry key="Python" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="py" value="5" />
-          <entry key="txt" value="90" />
+          <entry key="txt" value="179" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="90" />
+          <entry key="PLAIN_TEXT" value="179" />
           <entry key="Python" value="5" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AbonnementReport/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="40" column="14" lean-forward="true" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="PATH_TO_GIT" value="C:\Program Files\Git\cmd\git.exe" />
@@ -256,12 +245,18 @@
       <option name="project" value="LOCAL" />
       <updated>1541003099807</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="[提交原因]：登录、注册功能完成，整改一次代码&#10;[提交时间]：2018年11月1日23:36:20&#10;[提交计划]：2018年11月2日完成首页部分功能">
+      <created>1541086783578</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1541086783578</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2563966" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -274,7 +269,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.49946696" weight="0.32899022" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49946696" weight="0.32899022" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Python Console" order="11" />
@@ -294,7 +289,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[修改时间]：2018年11月1日00:11:56&#10;[修改原因]：创建工程git工程" />
-    <option name="LAST_COMMIT_MESSAGE" value="[修改时间]：2018年11月1日00:11:56&#10;[修改原因]：创建工程git工程" />
+    <MESSAGE value="[提交原因]：登录、注册功能完成，整改一次代码&#10;[提交时间]：2018年11月1日23:36:20&#10;[提交计划]：2018年11月2日完成首页部分功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="[提交原因]：登录、注册功能完成，整改一次代码&#10;[提交时间]：2018年11月1日23:36:20&#10;[提交计划]：2018年11月2日完成首页部分功能" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/static/media/icon/favicon.ico">
@@ -320,9 +316,6 @@
     <entry file="file://$PROJECT_DIR$/AbonnementReport/migrations/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/AbonnementReport/migrations/0001_initial.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/AbonnementReport/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -330,10 +323,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AbonnementReport/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/AbonnementReport/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="40" column="14" lean-forward="true" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+        <state relative-caret-position="494">
+          <caret line="26" column="23" lean-forward="true" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
         </state>
       </provider>
     </entry>
