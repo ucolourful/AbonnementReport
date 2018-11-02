@@ -1,20 +1,8 @@
-
-// 搜索特定人的订阅情况
-function mySearch() {
-    personName = document.getElementById("personName").value;
-    if ( personName == "" ) {
-        alert("请输入工号进行查询！！！");
-    }
-    else {
-        alert(personName);
-    }
-}
-
 // 添加版本
-function myAddVersion(){
-    username = document.getElementById("username").innerText;
-    if ( username == "admin" ) {
-        var versionName = document.getElementById("personName").value;
+function addVersion(){
+    userAuth = document.getElementById("userAuth").value;
+    if ( userAuth == "admin" ) {
+        var versionName = document.getElementById("versionName").value;
         if ( versionName == "" ) {
             alert("请输入版本号进行添加！！！")
             return
@@ -25,13 +13,14 @@ function myAddVersion(){
     }
     else {
         alert("您没有添加版本的权限！！！");
+        return
     }
 }
 
 // 删除版本
-function myDelVersion(event){
-    username = document.getElementById("username").innerText;
-    if ( username == "admin" ) {
+function delVersion(event){
+    userAuth = document.getElementById("userAuth").value;
+    if ( userAuth == "admin" ) {
         var versionID = event.id
         $.get("/delVersion",{'versionID':versionID},function(ret){
             location.reload()
@@ -39,5 +28,6 @@ function myDelVersion(event){
     }
     else {
         alert("您没有删除版本的权限！！！");
+        return
     }
 }
