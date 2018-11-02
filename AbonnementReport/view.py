@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 
-from AbonnementReport.models import UserClass
+from AbonnementReport.models import UserClass, UserAuth
 
 
 # 登陆页
@@ -52,8 +52,13 @@ def userLogin(request):
         request.session["loginErr"] = '用户名或密码错误'
         return redirect('/login')
 
+    # 获取用户权限，根据权限显示首页内容
+    userAuth = UserAuth.objects.get(userName=username)
+
     # 设置session，并设定12小时session过期
     request.session["username"] = username
+    request.session["productLine"] = user.productLine
+    request.session["userAuth"] = userAuth.userAuth
     request.session.set_expiry(60 * 60 * 12)
     return redirect('/index')
 
@@ -77,8 +82,14 @@ def userRegist(request):
                      productLine=request.POST['productline'])
     user.save()
 
-    # 设置用户名session，并跳转到首页
+    # 新注册用户，权限均为user
+    admin = UserAuth(userName=request.POST['username'], userAuth="user")
+    admin.save()
+
+    # 设置session，并跳转到首页
     request.session["username"] = request.POST['username']
+    request.session["productLine"] = request.POST['productline']
+    request.session["userAuth"] = "user"
     request.session.set_expiry(60 * 30)
     return redirect('/index')
 
@@ -97,7 +108,10 @@ def isExistUser(request):
 # 首页
 def index(request):
     if "username" in request.session:
-        return render(request, 'index.html', {'username': request.session["username"]})
+        return render(request, 'index.html',
+                      {'username': request.session["username"],
+                       'productLine': request.session["productLine"],
+                       'userAuth': request.session["userAuth"]})
     else:
         return redirect('/login')
 
