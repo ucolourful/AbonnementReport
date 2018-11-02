@@ -27,93 +27,111 @@
     <link href="../static/css/grid.css" rel="stylesheet">
     <link href="../static/css/selfcss.css" rel="stylesheet" type="text/css">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../static/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="../static/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../static/assets/js/ie-emulation-modes-warning.js"></script>
 </head>
 <body>
-    <script src="../static/javascript/ARIndex.js"></script>
+<script src="../static/javascript/ARIndex.js"></script>
 
-    <!-- 网页最上方的 system menu -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
+<!-- 网页最上方的 system menu -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
         <!-- system menu 显示网站的标题 -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="/index">报告订阅中心</a>
+            <a class="navbar-brand" href="/index">报告订阅中心</a>
         </div>
-        <!-- 显示 系统设置 以及 个人信息维护 -->
+        <!-- 显示个人信息 -->
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav  navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username">{{username}}<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/logout">退出登陆</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- 出包类型选择块、出包内容展示及编辑块 -->
-    <div class="site-wrapper container-fluid">
-        <div class="row">
-            <!-- 出包信息展示及编辑块 -->
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
-        <h2 class="sub-header">报告订阅</h2>
-
-        <!-- 查询or添加版本 头部 -->
-        <div class="row">
-        <div class="col-md-3">
-        <input class="form-control" style="text-align: center" type="text" value="请输入工号查询或订阅" readonly>
-        </div>
-        <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="" id="personName">
-        </div>
-        <div class="col-md-2">
-        <button type="button" class="btn btn-default" id="search" onclick="mySearch()">输入工号后点击搜索</button>
-        </div>
-        <div class="col-md-2">
-        <button type="button" class="btn btn-default" id="addversion" onclick="myAddVersion()">若版本不存在请联系CIE添加</button>
-        </div>
-        </div>
-
-        <!-- 分割线 -->
-        <div class="row">
-        <div class="col-md-12">
-        <input style="background-color: #6E6E6E; border: solid 1px #6E6E6E; height: 30px; font-size:25px; width: 100%; text-align: center" type="text" value="版本列表(版本不区分全量/滚动)" readonly>
-        </div>
-        </div>
-
-        <!-- 版本列表 -->
-        <div class="row">
-        {% for version in versionList %}
-        <div class="col-md-3">
-        <input class="form-control" style="height: 33px;text-align: center" type="text" value="{{version.versionName}}" readonly>
-        </div>
-        <div class="col-md-2">
-        <input id="mail{{version.versionID}}" style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox" checked>
-        <label style="height: 27px; font-size:18px;  text-align: center" for="mail{{version.versionID}}">邮件</label>
-        </div>
-        <div class="col-md-2">
-        <input id="msg{{version.versionID}}" style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
-        <label style="height: 27px; font-size:18px;  text-align: left" for="msg{{version.versionID}}">短信</label>
-        </div>
-        <div class="col-md-2">
-        <input id="espace{{version.versionID}}" style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
-        <label style="height: 27px; font-size:18px;  text-align: left" for="espace{{version.versionID}}">Espace</label>
-        </div>
-        <div class="col-md-3">
-        <button type="button" class="btn btn-default" id="{{version.versionID}}" name="version{{version.versionID}}" onclick="myDelVersion(this)">若无需此版本，请联系CIE删除</button>
-        </div>
-        {% endfor %}
-        </div>
-        </div>
+            <ul class="nav navbar-nav  navbar-right">
+                <li class="dropdown">
+                    <a href="javascript:return false;" onclick="return false;" style="cursor: default;" id="productLine" onfocus="return false;">
+                        <b>产品线：{{productLine}}</b>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username">
+                        {{username}}<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">修改密码</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/logout" id="logout">
+                        <b>注销</b>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <!-- javascript 放在最后面，网页加载速度更快 -->
-    <script>window.jQuery || document.write('<script src="../static/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../static/dist/js/bootstrap.min.js"></script>
-    <script src="../static/assets/js/ie10-viewport-bug-workaround.js"></script>
+<div class="site-wrapper container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+            <h2 class="sub-header">报告订阅</h2>
+            <input id="userAuth" value="{{userAuth}}" hidden>
+            {% if "admin" == userAuth %}
+            <!-- 添加版本 -->
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="请输入版本名称" id="versionName">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" id="addversion" onclick="addVersion()">
+                        添加版本
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 分割线 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <input style="background-color: #6E6E6E; border: solid 1px #6E6E6E; height: 30px; font-size:25px; width: 100%; text-align: center"
+                           type="text" value="版本列表(版本不区分全量/滚动)" readonly>
+                </div>
+            </div>
+
+            <!-- 版本列表 -->
+            <div class="row">
+                {% for version in versionList %}
+                <div class="col-md-3">
+                    <input class="form-control" style="height: 33px;text-align: center" type="text"
+                           value="{{version.versionName}}" readonly>
+                </div>
+                <div class="col-md-2">
+                    <input id="mail{{version.versionID}}"
+                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox" checked>
+                    <label style="height: 27px; font-size:18px;  text-align: center"
+                           for="mail{{version.versionID}}">邮件</label>
+                </div>
+                <div class="col-md-2">
+                    <input id="msg{{version.versionID}}"
+                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
+                    <label style="height: 27px; font-size:18px;  text-align: left"
+                           for="msg{{version.versionID}}">短信</label>
+                </div>
+                <div class="col-md-2">
+                    <input id="espace{{version.versionID}}"
+                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
+                    <label style="height: 27px; font-size:18px;  text-align: left" for="espace{{version.versionID}}">Espace</label>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default" id="{{version.versionID}}"
+                            name="version{{version.versionID}}" onclick="myDelVersion(this)">若无需此版本，请联系CIE删除
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- javascript 放在最后面，网页加载速度更快 -->
+<script>window.jQuery || document.write('<script src="../static/assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../static/dist/js/bootstrap.min.js"></script>
+<script src="../static/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
