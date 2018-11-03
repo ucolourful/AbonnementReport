@@ -45,12 +45,14 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav  navbar-right">
                 <li class="dropdown">
-                    <a href="javascript:return false;" onclick="return false;" style="cursor: default;" id="productLine" onfocus="return false;">
+                    <a href="javascript:return false;" onclick="return false;" style="cursor: default;" id="productLine"
+                       onfocus="return false;">
                         <b>产品线：{{productLine}}</b>
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="username">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false" id="username">
                         {{username}}<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -69,13 +71,18 @@
 
 <div class="site-wrapper container-fluid">
     <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+        <div class="col-sm-9 col-sm-offset-1 col-md-8 col-md-offset-2 main">
             <h2 class="sub-header">报告订阅</h2>
             <input id="userAuth" value="{{userAuth}}" hidden>
             {% if "admin" == userAuth %}
             <!-- 添加版本 -->
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2 col-md-offset-2">
+                    <button type="button" class="btn btn-default" id="viewAbUser" onclick="viewAbUser()">
+                        查看订阅人
+                    </button>
+                </div>
+                <div class="col-md-4">
                     <input type="text" class="form-control" placeholder="请输入版本名称" id="versionName">
                 </div>
                 <div class="col-md-2">
@@ -88,41 +95,37 @@
 
             <!-- 分割线 -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8 col-md-offset-2">
                     <input style="background-color: #6E6E6E; border: solid 1px #6E6E6E; height: 30px; font-size:25px; width: 100%; text-align: center"
-                           type="text" value="版本列表(版本不区分全量/滚动)" readonly>
+                           type="text" value="版本列表(版本不区分每日/冒烟)" readonly>
                 </div>
             </div>
 
             <!-- 版本列表 -->
             <div class="row">
                 {% for version in versionList %}
-                <div class="col-md-3">
+                <div class="col-md-2 col-md-offset-2">
+                    <button type="button" class="btn btn-default" style="height: 32px;"
+                            name="version_{{version.id}}" onclick="alert(this.name)">查看订阅人
+                    </button>
+                </div>
+                <div class="col-md-4">
                     <input class="form-control" style="height: 33px;text-align: center" type="text"
                            value="{{version.versionName}}" readonly>
                 </div>
+                {% if "admin" == userAuth %}
                 <div class="col-md-2">
-                    <input id="mail{{version.versionID}}"
-                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox" checked>
-                    <label style="height: 27px; font-size:18px;  text-align: center"
-                           for="mail{{version.versionID}}">邮件</label>
-                </div>
-                <div class="col-md-2">
-                    <input id="msg{{version.versionID}}"
-                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
-                    <label style="height: 27px; font-size:18px;  text-align: left"
-                           for="msg{{version.versionID}}">短信</label>
-                </div>
-                <div class="col-md-2">
-                    <input id="espace{{version.versionID}}"
-                           style="height: 17px; font-size:18px; width: 10%; text-align: center" type="checkbox">
-                    <label style="height: 27px; font-size:18px;  text-align: left" for="espace{{version.versionID}}">Espace</label>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-default" id="{{version.versionID}}"
-                            name="version{{version.versionID}}" onclick="myDelVersion(this)">若无需此版本，请联系CIE删除
+                    <button type="button" class="btn btn-default"
+                            name="version_{{version.id}}" onclick="delVersion(this)">删除此版本
                     </button>
                 </div>
+                {% else %}
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" style="height: 32px;"
+                            name="version_{{version.id}}" onclick="alert(this.name)">订阅报告
+                    </button>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
