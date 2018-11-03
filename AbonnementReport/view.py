@@ -83,14 +83,17 @@ def userRegist(request):
                      productLine=request.POST['productline'])
     user.save()
 
-    # 新注册用户，权限均为user
-    admin = UserAuth(userName=request.POST['username'], userAuth="user")
+    # 新注册用户，权限均为user；简单处理，为开发便利，若admin为注册用户，设为admin权限
+    if "admin" in request.POST['username']:
+        admin = UserAuth(userName=request.POST['username'], userAuth="admin")
+    else:
+        admin = UserAuth(userName=request.POST['username'], userAuth="user")
     admin.save()
 
     # 设置session，并跳转到首页
     request.session["username"] = request.POST['username']
     request.session["productLine"] = request.POST['productline']
-    request.session["userAuth"] = "user"
+    request.session["userAuth"] = admin.userAuth
     request.session.set_expiry(60 * 30)
     return redirect('/index')
 
