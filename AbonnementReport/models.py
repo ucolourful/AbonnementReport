@@ -19,3 +19,10 @@ class UserAuth(models.Model):
     """
     userName = models.CharField(max_length=30)
     userAuth = models.CharField(max_length=30)
+
+
+class ProductVersion(models.Model):
+    """
+    版本数据表
+    """
+    versionName = models.CharField(max_length=30)
