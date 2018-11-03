@@ -1,8 +1,9 @@
 # coding=utf-8
 
+from __future__ import print_function
 from django.shortcuts import render, redirect
 
-from AbonnementReport.models import UserClass, UserAuth
+from AbonnementReport.models import UserClass, UserAuth, ProductVersion
 
 
 # 登陆页
@@ -111,12 +112,48 @@ def index(request):
         return render(request, 'index.html',
                       {'username': request.session["username"],
                        'productLine': request.session["productLine"],
-                       'userAuth': request.session["userAuth"]})
+                       'userAuth': request.session["userAuth"],
+                       'versionList': ProductVersion.objects.all()})
     else:
         return redirect('/login')
 
 
+# 添加版本
+def addVersion(request):
+    # session中不存在username或userAuth，返回登录页
+    if "username" not in request.session or "userAuth" not in request.session or "productLine" not in request.session:
+        return redirect('/login')
+    # session中存在username
+    else:
+        # session中的userAuth，权限不是admin，返回首页
+        if request.session["userAuth"] == "admin" and "versionName" in request.POST:
+            if request.POST["versionName"] != "":
+                # TODO 判断版本是否存在
+                proVersion = ProductVersion(versionName=request.POST["versionName"])
+                proVersion.save()
+            return redirect('/index')
+        else:
+            return redirect('/index')
+
+
+# 删除版本
+def delVersion(request):
+    # session中不存在username或userAuth，返回登录页
+    if "username" not in request.session or "userAuth" not in request.session or "productLine" not in request.session:
+        return redirect('/login')
+    else:
+        if request.session["userAuth"] == "admin" and "versionID" in request.POST:
+            if request.POST["versionID"] != "":
+                # TODO 判断是否存在这个ID的版本
+                proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
+                proVersion.delete()
+            return redirect('/index')
+        else:
+            return redirect('/index')
+
+
 # 退出登录
 def logout(request):
+    # 清空所有session
     request.session.clear()
     return redirect('/login')
