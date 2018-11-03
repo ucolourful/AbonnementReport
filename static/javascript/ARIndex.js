@@ -7,7 +7,7 @@ function addVersion(){
             alert("请输入版本号进行添加！！！")
             return
         }
-        $.get("/addVersion",{'versionName':versionName},function(ret){
+        $.post("/addVersion",{'versionName':versionName},function(ret){
             location.reload()
         })
     }
@@ -21,8 +21,8 @@ function addVersion(){
 function delVersion(event){
     userAuth = document.getElementById("userAuth").value;
     if ( userAuth == "admin" ) {
-        var versionID = event.id
-        $.get("/delVersion",{'versionID':versionID},function(ret){
+        var versionID = event.name.split("_")[1]
+        $.post("/delVersion",{'versionID':versionID},function(ret){
             location.reload()
         })
     }
