@@ -39,6 +39,12 @@ urlpatterns = [
     # 退出登录
     url(r"^logout", view.logout),
 
+    # 添加版本
+    url(r"^addVersion", view.addVersion),
+
+    # 删除版本
+    url(r"^delVersion", view.delVersion),
+
     # 均不匹配，清理所有session，进入登录界面
     url(r"^", view.logout),
 ]
