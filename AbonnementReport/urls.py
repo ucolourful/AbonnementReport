@@ -45,6 +45,12 @@ urlpatterns = [
     # 删除版本
     url(r"^delVersion", view.delVersion),
 
+    # 订阅/取消订阅
+    url(r"^abonnementReport", view.abonnementReport),
+
+    # 查看订阅人
+    url(r"^viewVersionUsers", view.viewVersionUsers),
+
     # 均不匹配，清理所有session，进入登录界面
     url(r"^", view.logout),
 ]
