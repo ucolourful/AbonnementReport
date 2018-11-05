@@ -77,15 +77,15 @@
             {% if "admin" == userAuth %}
             <!-- 添加版本 -->
             <div class="row">
-                <div class="col-md-2 col-md-offset-2">
-                    <button type="button" class="btn btn-default" id="viewAbUser" onclick="viewAbUser()">
+                <div class="col-md-2 col-md-offset-2" style="height: 60px;">
+                    <button type="button" class="btn btn-default" name="viewAllAbUser" onclick="viewVersionUsers(this)">
                         查看订阅人
                     </button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="height: 60px;">
                     <input type="text" class="form-control" placeholder="请输入版本名称" id="versionName">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="height: 60px;">
                     <button type="button" class="btn btn-default" id="addversion" onclick="addVersion()">
                         添加版本
                     </button>
@@ -102,32 +102,42 @@
             </div>
 
             <!-- 版本列表 -->
+            {% for version in versionList %}
             <div class="row">
-                {% for version in versionList %}
-                <div class="col-md-2 col-md-offset-2">
-                    <button type="button" class="btn btn-default" style="height: 32px;"
-                            name="version_{{version.id}}" onclick="alert(this.name)">查看订阅人
+                <div class="col-md-2 col-md-offset-2" style="height: 60px;">
+                    <button type="button" class="btn btn-default"
+                            name="{{version.versionName}}" onclick="viewVersionUsers(this)">查看订阅人
                     </button>
                 </div>
-                <div class="col-md-4">
-                    <input class="form-control" style="height: 33px;text-align: center" type="text"
+                <div class="col-md-4" style="height: 60px;">
+                    <input class="form-control" style="text-align: center" type="text"
                            value="{{version.versionName}}" readonly>
                 </div>
                 {% if "admin" == userAuth %}
-                <div class="col-md-2">
+                <div class="col-md-2" style="height: 60px;">
                     <button type="button" class="btn btn-default"
                             name="version_{{version.id}}" onclick="delVersion(this)">删除此版本
                     </button>
                 </div>
                 {% else %}
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-default" style="height: 32px;"
-                            name="version_{{version.id}}" onclick="alert(this.name)">订阅报告
+                {% if version.versionName in acList %}
+                <div class="col-md-2" style="height: 60px;">
+                    <button type="button" class="btn btn-default"
+                            name="version_{{version.id}}" onclick="abonnementReport(this)" value="0">
+                        取消订阅
+                    </button>
+                </div>
+                {% else %}
+                <div class="col-md-2" style="height: 60px;">
+                    <button type="button" class="btn btn-default"
+                            name="version_{{version.id}}" onclick="abonnementReport(this)" value="1">
+                        订阅报告
                     </button>
                 </div>
                 {% endif %}
-                {% endfor %}
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
