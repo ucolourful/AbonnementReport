@@ -1,9 +1,12 @@
 # coding=utf-8
 
+
 from __future__ import print_function
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+import json
 
-from AbonnementReport.models import UserClass, UserAuth, ProductVersion
+from AbonnementReport.models import UserClass, UserAuth, ProductVersion, AbonnementClass
 
 
 # 登陆页
@@ -112,11 +115,17 @@ def isExistUser(request):
 # 首页
 def index(request):
     if "username" in request.session:
+        # 获取用户订阅过的版本名称列表，首页区分订阅/取消订阅
+        acList = []
+        listData = AbonnementClass.objects.filter(userName=request.session["username"])
+        for l in listData:
+            acList.append(l.versionName)
         return render(request, 'index.html',
                       {'username': request.session["username"],
                        'productLine': request.session["productLine"],
                        'userAuth': request.session["userAuth"],
-                       'versionList': ProductVersion.objects.all()})
+                       'versionList': ProductVersion.objects.all(),
+                       'acList': acList})
     else:
         return redirect('/login')
 
@@ -131,9 +140,11 @@ def addVersion(request):
         # session中的userAuth，权限不是admin，返回首页
         if request.session["userAuth"] == "admin" and "versionName" in request.POST:
             if request.POST["versionName"] != "":
-                # TODO 判断版本是否存在
-                proVersion = ProductVersion(versionName=request.POST["versionName"])
-                proVersion.save()
+                # 判断版本是否存在
+                versionNameList = ProductVersion.objects.filter(versionName=request.POST["versionName"])
+                if len(versionNameList) == 0:
+                    proVersion = ProductVersion(versionName=request.POST["versionName"])
+                    proVersion.save()
             return redirect('/index')
         else:
             return redirect('/index')
@@ -147,12 +158,69 @@ def delVersion(request):
     else:
         if request.session["userAuth"] == "admin" and "versionID" in request.POST:
             if request.POST["versionID"] != "":
-                # TODO 判断是否存在这个ID的版本
-                proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
-                proVersion.delete()
+                # 判断是否存在这个ID的版本
+                versionIDList = ProductVersion.objects.filter(id=int(request.POST["versionID"]))
+                if len(versionIDList) != 0:
+                    proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
+                    proVersion.delete()
             return redirect('/index')
         else:
             return redirect('/index')
+
+
+# 订阅/取消订阅
+def abonnementReport(request):
+    # 登录过期,重新登录
+    if "username" not in request.session:
+        return redirect('/login')
+    # 未传入versionID，返回首页
+    if "versionID" not in request.POST or "doAction" not in request.POST:
+        return redirect('/index')
+    # 判断是否存在这个ID的版本、用户是否存在，任意不存在返回首页
+    versionIDList = ProductVersion.objects.filter(id=int(request.POST["versionID"]))
+    userList = UserClass.objects.filter(userName=request.session["username"])
+    if len(versionIDList) == 0 or len(userList) == 0:
+        return redirect('/index')
+    # 获取用户&版本信息
+    proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
+    user = UserClass.objects.get(userName=request.session["username"])
+    acList = AbonnementClass.objects.filter(versionName=proVersion.versionName, userName=user.userName,
+                                            emailAddr=user.emailAddr)
+    # "doAction==1"用户进行订阅操作、；并判断该用户是否订阅过此版本，订阅过则返回到首页
+    if "1" == request.POST["doAction"] and len(acList) == 0:
+        # 保存订阅信息到订阅数据表
+        ac = AbonnementClass(versionName=proVersion.versionName, userName=user.userName, emailAddr=user.emailAddr)
+        ac.save()
+    # "doAction==0"用户进行取消订阅操作
+    elif "0" == request.POST["doAction"] and len(acList) == 1:
+        ac = AbonnementClass.objects.get(versionName=proVersion.versionName, userName=user.userName,
+                                         emailAddr=user.emailAddr)
+        ac.delete()
+    return redirect('/index')
+
+
+# 查看订阅人
+def viewVersionUsers(request):
+    # 登录过期,重新登录
+    if "username" not in request.session:
+        return redirect('/login')
+    # 查看单个版本的订阅人列表
+    if "versionName" in request.GET:
+        userList = []
+        acList = AbonnementClass.objects.filter(versionName=request.GET["versionName"])
+        for ac in acList:
+            userList.append(ac.userName)
+        return HttpResponse(json.dumps({'userList': userList}), content_type="application/json")
+    # 查看所有版本的订阅人列表
+    else:
+        acList = AbonnementClass.objects.all()
+        resp = {}
+        for ac in acList:
+            if resp.has_key(ac.versionName) is False:
+                resp[ac.versionName] = [ac.userName]
+            else:
+                resp[ac.versionName].append(ac.userName)
+        return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
 # 退出登录
