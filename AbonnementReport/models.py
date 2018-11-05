@@ -26,3 +26,12 @@ class ProductVersion(models.Model):
     版本数据表
     """
     versionName = models.CharField(max_length=30)
+
+
+class AbonnementClass(models.Model):
+    """
+    订阅数据表
+    """
+    versionName = models.CharField(max_length=30)
+    userName = models.CharField(max_length=30)
+    emailAddr = models.CharField(max_length=30)
