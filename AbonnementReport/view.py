@@ -74,8 +74,13 @@ def regist(request):
 # 用户注册动作
 def userRegist(request):
     # 未传入用户名、密码、邮箱，跳转注册页面
-    if "username" not in request.POST and "password" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
+    if "username" not in request.POST and "password" not in request.POST and "password2" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
         request.session["registErr"] = '请输入用户名、密码、邮箱、产品线'
+        return redirect('/regist')
+
+    # 判断两次输入密码是否一致
+    if request.POST['password'] != request.POST['password2']:
+        request.session["registErr"] = '两次输入密码不一致'
         return redirect('/regist')
 
     # 若用户名存在，返回注册页
@@ -226,8 +231,13 @@ def userUpdate(request):
         return redirect('/login')
 
     # 未填必填项
-    if "username" not in request.POST and "password" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
+    if "username" not in request.POST and "password" not in request.POST and "password2" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
         request.session["updateErr"] = '请输入用户名、密码、邮箱、产品线'
+        return redirect('/userSetting')
+
+    # 判断两次输入密码是否一致
+    if request.POST['password'] != request.POST['password2']:
+        request.session["updateErr"] = '两次输入密码不一致'
         return redirect('/userSetting')
 
     # 查询用户是否存在
