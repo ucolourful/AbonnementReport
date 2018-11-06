@@ -51,6 +51,12 @@ urlpatterns = [
     # 查看订阅人
     url(r"^viewVersionUsers", view.viewVersionUsers),
 
+    # 用户信息设置
+    url(r"^userSetting", view.userSetting),
+
+    # 更新用户信息操作
+    url(r"^userUpdate", view.userUpdate),
+
     # 均不匹配，清理所有session，进入登录界面
     url(r"^", view.logout),
 ]
