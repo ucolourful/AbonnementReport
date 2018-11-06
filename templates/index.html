@@ -56,7 +56,7 @@
                         {{username}}<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">修改密码</a></li>
+                        <li><a href="/userSetting">修改信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -78,8 +78,8 @@
             <!-- 添加版本 -->
             <div class="row">
                 <div class="col-md-2 col-md-offset-2" style="height: 60px;">
-                    <button type="button" class="btn btn-default" name="viewAllAbUser" onclick="viewVersionUsers(this)">
-                        查看订阅人
+                    <button type="button" class="btn btn-default" name="" onclick="viewVersionUsers(this)">
+                        查看已订阅
                     </button>
                 </div>
                 <div class="col-md-4" style="height: 60px;">
@@ -106,7 +106,7 @@
             <div class="row">
                 <div class="col-md-2 col-md-offset-2" style="height: 60px;">
                     <button type="button" class="btn btn-default"
-                            name="{{version.versionName}}" onclick="viewVersionUsers(this)">查看订阅人
+                            name="{{version.versionName}}" onclick="viewVersionUsers(this)">查看已订阅
                     </button>
                 </div>
                 <div class="col-md-4" style="height: 60px;">
