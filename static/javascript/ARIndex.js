@@ -69,17 +69,10 @@ function viewVersionUsers(event){
     // 获取版本名称
     versionName = event.name
 
-    // 查看单个版本订阅人
-    if ( versionName != "viewAllAbUser" ){
-        $.get("/viewVersionUsers",{'versionName':versionName},function(ret){
-            var obj = JSON.parse(JSON.stringify(ret))
-            alert(obj.userList)
-        },"json")
+    // 新开标签页查看版本订阅人
+    if ( versionName != "" ){
+        window.open("/viewVersionUsers?versionName="+versionName,"viewVersionUsers","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1")
+    } else {
+        window.open("/viewVersionUsers","viewVersionUsers","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1")
     }
-    else{
-        $.get("/viewVersionUsers",function(ret){
-            alert(JSON.stringify(ret))
-        },"json")
-    }
-    return
 }
