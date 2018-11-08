@@ -73,6 +73,7 @@ def regist(request):
 
 # 用户注册动作
 def userRegist(request):
+    print("11111")
     # 未传入用户名、密码、邮箱，跳转注册页面
     if "username" not in request.POST and "password" not in request.POST and "password2" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
         request.session["registErr"] = '请输入用户名、密码、邮箱、产品线'
