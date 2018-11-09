@@ -839,7 +839,7 @@ a cite {
 
 .layui-body {
     position: absolute;
-    left: 200px;
+    left: 30%;
     right: 0;
     top: 0;
     bottom: 0;
@@ -849,6 +849,21 @@ a cite {
     overflow-y: auto;
     box-sizing: border-box;
 }
+
+.layui-body-index {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10%;
+    bottom: 44px;
+    z-index: 998;
+    width: auto;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
 
 /* 后台框架大布局 */
 .layui-layout-body {
@@ -866,7 +881,7 @@ a cite {
 }
 
 .layui-layout-admin .layui-body {
-    top: 60px;
+    top: 30%;
     bottom: 44px;
 }
 
@@ -895,7 +910,7 @@ a cite {
     line-height: 60px;
     text-align: center;
     color: #009688;
-    font-size: 56px;
+    font-size: 26px;
 }
 
 .layui-layout-admin .layui-header .layui-nav {
@@ -1563,7 +1578,7 @@ a cite {
 }
 
 .layui-elem-field legend {
-    margin-left: 20px;
+    margin-left: 42%;
     padding: 0 10px;
     font-size: 20px;
     font-weight: 300;
@@ -2073,7 +2088,7 @@ hr, .layui-timeline-item:before {
 
 .layui-input, .layui-textarea {
     display: block;
-    width: 100%;
+    width: 40%;
     padding-left: 10px;
 }
 
