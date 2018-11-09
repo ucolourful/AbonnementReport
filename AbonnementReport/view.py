@@ -26,34 +26,28 @@ def login(request):
 
 # 用户登录动作
 def userLogin(request):
-    # 若未传入用户名和密码，跳转登录页面
+    # 非正常请求，跳转到登录页
     if "username" not in request.POST and "password" not in request.POST:
-        request.session["loginErr"] = '请输入用户名和密码'
         return redirect('/login')
 
-    # 验证用户名、密码是否正确
-    username = request.POST['username']
-
-    # 查询结果为0，不存在此用户名的用户
-    if len(UserClass.objects.filter(userName=username)) == 0:
-        request.session["loginErr"] = '用户名或密码错误'
-        return redirect('/login')
+    # 不存在此用户
+    if len(UserClass.objects.filter(userName=request.POST['username'])) == 0:
+        return HttpResponse(json.dumps({"status": 1, "msg": "用户名或密码错误"}), content_type="application/json")
 
     # 用户名存在，匹配密码，不正确返回登录页面
-    user = UserClass.objects.get(userName=username)
+    user = UserClass.objects.get(userName=request.POST['username'])
     if user.passWord != request.POST['password']:
-        request.session["loginErr"] = '用户名或密码错误'
-        return redirect('/login')
+        return HttpResponse(json.dumps({"status": 1, "msg": "用户名或密码错误"}), content_type="application/json")
 
     # 获取用户权限，根据权限显示首页内容
-    userAuth = UserAuth.objects.get(userName=username)
+    userAuth = UserAuth.objects.get(userName=request.POST['username'])
 
     # 设置session，并设定12小时session过期
-    request.session["username"] = username
+    request.session["username"] = user.userName
     request.session["productLine"] = user.productLine
     request.session["userAuth"] = userAuth.userAuth
     request.session.set_expiry(60 * 60 * 12)
-    return redirect('/index')
+    return HttpResponse(json.dumps({"status": 0, "msg": "登录成功！即将跳转到首页！"}), content_type="application/json")
 
 
 # 注册页
@@ -73,22 +67,14 @@ def regist(request):
 
 # 用户注册动作
 def userRegist(request):
-    print("11111")
-    # 未传入用户名、密码、邮箱，跳转注册页面
+    # 非正常请求，跳转到注册页
     if "username" not in request.POST and "password" not in request.POST and "password2" not in request.POST and "email" not in request.POST and "productline" not in request.POST:
-        request.session["registErr"] = '请输入用户名、密码、邮箱、产品线'
         return redirect('/regist')
 
-    # 判断两次输入密码是否一致
-    if request.POST['password'] != request.POST['password2']:
-        request.session["registErr"] = '两次输入密码不一致'
-        return redirect('/regist')
-
-    # 若用户名存在，返回注册页
+    # 若用户名存在，返回"用户名或邮箱已存在"
     if len(UserClass.objects.filter(userName=request.POST["username"])) != 0 \
             or len(UserClass.objects.filter(emailAddr=request.POST["email"])) != 0:
-        request.session["registErr"] = '用户名或邮箱已存在'
-        return redirect('/regist')
+        return HttpResponse(json.dumps({"status": 1, "msg": "用户名或邮箱已存在"}), content_type="application/json")
 
     # 用户不存在，注册成功
     user = UserClass(userName=request.POST['username'],
@@ -110,7 +96,7 @@ def userRegist(request):
     request.session["productLine"] = request.POST['productline']
     request.session["userAuth"] = ua.userAuth
     request.session.set_expiry(60 * 60 * 12)
-    return redirect('/index')
+    return HttpResponse(json.dumps({"status": 0, "msg": "注册成功！即将跳转到首页！"}), content_type="application/json")
 
 
 # 首页
