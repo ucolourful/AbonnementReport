@@ -1,7 +1,9 @@
 //AR 注册页 JS
-layui.use(['element', 'layer', 'form'], function () {
+layui.use(['element', 'layer', 'form','jquery'], function () {
     var element = layui.element;
     var form = layui.form;
+    layer = layui.layer;
+    $ = layui.jquery;
 
     //自定义验证规则
     form.verify({
@@ -14,7 +16,7 @@ layui.use(['element', 'layer', 'form'], function () {
         , pass2: function (value) {
             if (value !== $("#password").val()) {
                 $("#password2").val("");
-                return '两次输出的密码不一致吧'
+                return '两次输出的密码不一致吧';
             }
         }
     });
@@ -24,10 +26,10 @@ layui.use(['element', 'layer', 'form'], function () {
         $.post("/userRegist", data.field, function (ret) {
             if (ret.status === 0) {
                 layer.msg(ret.msg);
-                setTimeout("window.location.href='/index'", 2000)
+                setTimeout("window.location.href='/index'", 2000);
             }
             if (ret.status === 1) {
-                layer.msg(ret.msg)
+                layer.msg(ret.msg);
             }
         });
         return false

@@ -1,44 +1,73 @@
-layui.use(['element','layer'], function () {
+// 首页JS
+layui.use(['element','layer','jquery'], function () {
     var element = layui.element;
+    layer = layui.layer;
+    $ = layui.jquery;
+
+    $('#addversion').on('click',function(){
+    	if ($('#userAuth').val() ===  "admin") {
+    		if ($('#inputVersion').val() === "") {
+    			layer.alert("请输入版本号进行添加！")
+    		}else{
+				$.post("/addVersion",{'versionName':$('#inputVersion').val()},function(ret){
+				   if (ret.status === 0){
+				   		layer.msg(ret.msg);
+				   		setTimeout("location.reload()", 1000);
+				   }
+				   if (ret.status === 1) {
+				   		layer.alert(ret.msg);
+				   }
+				})
+    		}
+    	} else{
+    		layer.msg("您没有添加版本的权限！！！");
+    	}
+    	return
+    });
+
+    $('#viewAllUser').on('click',function(){
+    	layer.msg("viewAllUser");
+    });
+
+    $('.layui-btn1').on('click',function(){
+    	if (this.id === "addversion") { return };
+    	var versionID = this.name.split("_")[1];
+    	if ($('#userAuth').val() === "admin") {
+    		layer.confirm("请确认是否删除此版本？",{
+    			time:0,
+    			btn:['确认','取消']},
+    			function(){
+    				$.post("/delVersion",{'versionID':versionID},function(ret){
+						if (ret.status === 0){
+							layer.msg(ret.msg);
+							setTimeout("location.reload()", 1000);
+						}
+						if (ret.status === 1) {
+							layer.alert(ret.msg);
+						}
+					})
+				}
+			)
+    	}else{
+    		// TODO，这里可以优化一下，先通过value判定confirm的str
+			if (this.value == "0"){
+				if ( confirm("请确认是否取消订阅此版本邮件？") == true){
+					$.post("/abonnementReport",{'versionID':versionID,'doAction':event.value},function(ret){
+					location.reload()
+					})
+					return
+				}
+				return
+			}
+    	}
+    });
+
+    $('.layui-btn2').on('click',function(){
+    	if (this.id === "viewAllUser") { return };
+    	layer.alert(this.id)
+    });
 });
-//// 添加版本
-//function addVersion(){
-//    userAuth = document.getElementById("userAuth").value;
-//    if ( userAuth == "admin" ) {
-//        var versionName = document.getElementById("versionName").value;
-//        if ( versionName == "" ) {
-//            alert("请输入版本号进行添加！！！")
-//            return
-//        }
-//        if ( confirm("请确认是否添加此版本？") == true){
-//            $.post("/addVersion",{'versionName':versionName},function(ret){
-//                location.reload()
-//            })
-//        }
-//    }
-//    else {
-//        alert("您没有添加版本的权限！！！");
-//        return
-//    }
-//}
-//
-//// 删除版本
-//function delVersion(event){
-//    userAuth = document.getElementById("userAuth").value;
-//    if ( userAuth == "admin" ) {
-//        var versionID = event.name.split("_")[1]
-//        if ( confirm("请确认是否删除此版本？") == true){
-//            $.post("/delVersion",{'versionID':versionID},function(ret){
-//                location.reload()
-//            })
-//        }
-//    }
-//    else {
-//        alert("您没有删除版本的权限！！！");
-//        return
-//    }
-//}
-//
+
 //// 订阅版本
 //function abonnementReport(event){
 //    // 获取versionID

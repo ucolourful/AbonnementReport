@@ -1,7 +1,9 @@
 //AR 注册页 JS
-layui.use(['element','layer','form'], function () {
+layui.use(['element','layer','form','jquery'], function () {
     var element = layui.element;
     var form = layui.form;
+    layer = layui.layer;
+    $ = layui.jquery
 
     //自定义验证规则
     form.verify({

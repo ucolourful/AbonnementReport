@@ -131,7 +131,8 @@ def addVersion(request):
             if len(versionNameList) == 0:
                 proVersion = ProductVersion(versionName=request.POST["versionName"])
                 proVersion.save()
-    return redirect('/index')
+                return HttpResponse(json.dumps({"status": 0, "msg": "添加版本成功！"}), content_type="application/json")
+    return HttpResponse(json.dumps({"status": 1, "msg": "添加版本失败！请确认权限或版本是否已经存在！"}), content_type="application/json")
 
 
 # 删除版本
@@ -147,7 +148,8 @@ def delVersion(request):
             if len(versionIDList) != 0:
                 proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
                 proVersion.delete()
-    return redirect('/index')
+                return HttpResponse(json.dumps({"status": 0, "msg": "删除版本成功！"}), content_type="application/json")
+    return HttpResponse(json.dumps({"status": 1, "msg": "删除版本失败！请确认权限或版本是否已删除！"}), content_type="application/json")
 
 
 # 订阅/取消订阅
