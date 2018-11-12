@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-    {%load staticfiles %}
+    {% load staticfiles %}
     <!-- meta设置 -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <!-- 网页图标 -->
     <link rel="icon" href="{% static 'media/icon/favicon.ico' %}">
@@ -15,99 +12,79 @@
     <!-- 网页标题 -->
     <title>报告订阅中心</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="../static/css/cover.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../static/assets/js/ie-emulation-modes-warning.js"></script>
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- layui CSS -->
+    <link rel="stylesheet" href="../static/src/css/layui.css">
 </head>
 
 <body>
-
-<!-- 网页最上方的 system menu -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-
-        <!-- system menu 显示网站的标题 -->
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/index">报告订阅中心</a>
-        </div>
-
-        <!-- 显示个人信息 -->
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav  navbar-right">
-                <li class="dropdown">
-                    <a href="javascript:return false;" onclick="return false;" style="cursor: default;"
-                       onfocus="return false;">
-                        <b>产品线：{{productLine}}</b>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">
-                        {{user.userName}}<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/userSetting">修改信息</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="/logout" id="logout">
-                        <b>注销</b>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div class="layui-layout layui-layout-admin">
+    <!-- 导航栏 -->
+    <div class="layui-header">
+        <div class="layui-logo">报告订阅中心 - 信息修改</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a>{{ user.productLine }}</a></li>
+            <li class="layui-nav-item"><a href="">{{ user.userName }}</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/userSetting">修改资料</a></dd>
+                    <dd><a href="/logout">注销登录</a></dd>
+                </dl>
+            </li>
+        </ul>
     </div>
-</nav>
 
-<!-- form表单 以及 网页footer -->
-<div class="site-wrapper">
-    <div class="site-wrapper-inner">
-        <div class="cover-container">
+    <!-- 修改表单 -->
+    <div class="layui-body">
+        <br><br>
+        <form class="layui-form layui-form-pane1" lay-filter="regist">
 
-            <!-- 表单 -->
-            <div class="inner cover">
-                <form class="form-signin" action="/userUpdate" method="post">
-                    <h1 class="form-signin-heading">修改个人信息</h1><br>
-                    <input name="userID" id="userID" value="{{user.id}}" hidden>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="用户名"
-                           value="{{user.userName}}"
-                           required autofocus><br>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="密码"
-                           value="{{user.passWord}}"
-                           required><br>
-                    <input type="password" name="password2" id="password2" class="form-control" placeholder="确认密码"
-                           value="{{user.passWord}}"
-                           required><br>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="邮箱"
-                           value="{{user.emailAddr}}" required><br>
-                    <input type="text" name="productline" id="productline" placeholder="产品线" class="form-control"
-                           value="{{user.productLine}}" required><br>
-                    <h6>{{ err }}</h6>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">更 新</button>
-                </form>
-            </div>
-
-            <!-- 网页footer -->
-            <div class="mastfoot">
-                <div class="inner">
-                    <p>报告订阅中心</p>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" lay-verify="required|title" placeholder="请输入用户名"
+                           value="{{user.userName}}" autocomplete="off" class="layui-input">
                 </div>
             </div>
-        </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" id="password" lay-verify="required|pass" placeholder="请输入密码"
+                           value="{{user.passWord}}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password2" id="password2" lay-verify="required|pass2"
+                           value="{{user.passWord}}" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <label>
+                        <input type="email" name="email" lay-verify="required|email" lay-verType="msg"
+                               autocomplete="off"
+                               value="{{user.emailAddr}}" placeholder="请输入正确的邮箱" class="layui-input">
+                    </label>
+                </div>
+            </div>
+
+            <input name="productline" value="{{user.productLine}}" hidden>
+            <input name="userID" value="{{user.id}}" hidden>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="*">修改信息</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- JS -->
-<script>window.jQuery || document.write('<script src="../static/assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="../static/dist/js/bootstrap.min.js"></script>
-<script src="../static/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+<script src="../static/src/layui.js"></script>
+<script src="../static/javascript/ARsetting.js"></script>
 </body>
 </html>
