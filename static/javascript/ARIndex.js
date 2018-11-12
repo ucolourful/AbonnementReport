@@ -25,10 +25,6 @@ layui.use(['element','layer','jquery'], function () {
     	return
     });
 
-    $('#viewAllUser').on('click',function(){
-    	layer.msg("viewAllUser");
-    });
-
     $('.layui-btn1').on('click',function(){
     	if (this.id === "addversion") { return };
     	var versionID = this.name.split("_")[1];
@@ -45,66 +41,44 @@ layui.use(['element','layer','jquery'], function () {
 						if (ret.status === 1) {
 							layer.alert(ret.msg);
 						}
-					})
+					});
 				}
-			)
+			);
     	}else{
-    		// TODO，这里可以优化一下，先通过value判定confirm的str
-			if (this.value == "0"){
-				if ( confirm("请确认是否取消订阅此版本邮件？") == true){
-					$.post("/abonnementReport",{'versionID':versionID,'doAction':event.value},function(ret){
-					location.reload()
-					})
-					return
-				}
-				return
-			}
+    	    var tmp = this.value
+    	    if (tmp === "0"){
+                str = "请确认是否取消订阅此版本邮件？"
+    	    };
+    	    if (tmp === "1"){
+                str = "请确认是否订阅此版本邮件？"
+    	    };
+            layer.confirm(str,{
+                time:0,
+                btn:['确认','取消']},
+                function(){
+                    $.post("/abonnementReport",{'versionID':versionID,'doAction':tmp},function(ret){
+                        if (ret.status === 0){
+                            layer.msg(ret.msg);
+                            setTimeout("location.reload()", 1000);
+                        }
+                        if (ret.status === 1) {
+                            layer.alert(ret.msg);
+                        }
+                    })
+                }
+            );
     	}
     });
 
     $('.layui-btn2').on('click',function(){
-    	if (this.id === "viewAllUser") { return };
-    	layer.alert(this.id)
+    	versionName = this.name
+    	if ( versionName === "" ){
+    	    url = "/viewVersionUsers"
+    	} else {
+    	    url = "/viewVersionUsers?versionName="+versionName
+    	}
+    	$.get(url,function(ret){
+    	    layer.alert(JSON.stringify(ret.msg));
+    	});
     });
 });
-
-//// 订阅版本
-//function abonnementReport(event){
-//    // 获取versionID
-//    versionID = event.name.split("_")[1]
-//
-//    // 已订阅,这里处理"取消订阅"的功能
-//    if (event.value == "0"){
-//        if ( confirm("请确认是否取消订阅此版本邮件？") == true){
-//            $.post("/abonnementReport",{'versionID':versionID,'doAction':event.value},function(ret){
-//                location.reload()
-//            })
-//            return
-//        }
-//        return
-//    }
-//    // 未订阅,这里处理"订阅报告"的功能
-//
-//    if (event.value == "1"){
-//        if ( confirm("请确认是否订阅此版本邮件？") == true){
-//            $.post("/abonnementReport",{'versionID':versionID,'doAction':event.value},function(ret){
-//                location.reload()
-//            })
-//            return
-//        }
-//        return
-//    }
-//}
-//
-//// 查看订阅人
-//function viewVersionUsers(event){
-//    // 获取版本名称
-//    versionName = event.name
-//
-//    // 新开标签页查看版本订阅人
-//    if ( versionName != "" ){
-//        window.open("/viewVersionUsers?versionName="+versionName,"viewVersionUsers","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1")
-//    } else {
-//        window.open("/viewVersionUsers","viewVersionUsers","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1")
-//    }
-//}
