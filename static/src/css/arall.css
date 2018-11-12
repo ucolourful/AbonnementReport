@@ -101,6 +101,17 @@
     filter: alpha(opacity=100);
 }
 
+.layui-btn2:hover {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    color: #fff;
+}
+
+.layui-btn2:active {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
 .layui-input1 {
     text-align: center;
     width: 80%;
