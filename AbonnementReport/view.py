@@ -146,7 +146,11 @@ def delVersion(request):
         if request.POST["versionID"] != "":
             versionIDList = ProductVersion.objects.filter(id=int(request.POST["versionID"]))
             if len(versionIDList) != 0:
+                # 删除订阅人信息
                 proVersion = ProductVersion.objects.get(id=int(request.POST["versionID"]))
+                abList = AbonnementClass.objects.filter(versionName=proVersion.versionName)
+                for ab in abList:
+                    ab.delete()
                 proVersion.delete()
                 return HttpResponse(json.dumps({"status": 0, "msg": "删除版本成功！"}), content_type="application/json")
     return HttpResponse(json.dumps({"status": 1, "msg": "删除版本失败！请确认权限或版本是否已删除！"}), content_type="application/json")
