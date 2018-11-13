@@ -3,7 +3,7 @@
     margin-top: 30px;
 }
 
-.grid-demo {
+.grid-demo-inputversion {
     padding: 10px;
     line-height: 50px;
     text-align: center;
@@ -12,7 +12,7 @@
     font-size: 20px;
 }
 
-.grid-demo-for {
+.grid-demo-vname {
     padding: 10px;
     line-height: 50px;
     text-align: center;
@@ -21,7 +21,7 @@
     font-size: 25px;
 }
 
-.grid-demo1 {
+.grid-demo-view {
     padding: 10px;
     line-height: 50px;
     text-align: center;
@@ -30,7 +30,7 @@
     border-radius: 20px 0 0 20px;
 }
 
-.grid-demo2 {
+.grid-demo-opt {
     padding: 10px;
     line-height: 50px;
     text-align: center;
@@ -47,7 +47,7 @@
     color: #fff;
 }
 
-.layui-btn1 {
+.layui-btn-opt {
     display: inline-block;
     vertical-align: middle;
     width: 80%;
@@ -68,7 +68,7 @@
     border-radius: 10px;
 }
 
-.layui-btn2 {
+.layui-btn-view {
     display: inline-block;
     vertical-align: middle;
     width: 80%;
@@ -90,29 +90,29 @@
 }
 
 
-.layui-btn1:hover {
+.layui-btn-opt:hover {
     opacity: 0.8;
     filter: alpha(opacity=80);
     color: #fff;
 }
 
-.layui-btn1:active {
+.layui-btn-opt:active {
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
-.layui-btn2:hover {
+.layui-btn-view:hover {
     opacity: 0.8;
     filter: alpha(opacity=80);
     color: #fff;
 }
 
-.layui-btn2:active {
+.layui-btn-view:active {
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
-.layui-input1 {
+.layui-input-version {
     text-align: center;
     width: 80%;
     height: 38px;
