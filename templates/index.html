@@ -41,17 +41,19 @@
                 <div class="grid-demo-transparent"></div>
             </div>
             <div class="layui-col-md2">
-                <div class="grid-demo1">
-                    <button class="layui-btn2" id="viewAllUser">查看已订阅</button>
+                <div class="grid-demo-view">
+                    <button class="layui-btn-view" id="viewAllUser">查看已订阅</button>
                 </div>
             </div>
             <div class="layui-col-md4">
-                <div class="grid-demo"><input type="text" id="inputVersion" placeholder="请输入版本号" autocomplete="off"
-                                              class="layui-input1"></div>
+                <div class="grid-demo-inputversion">
+                    <input type="text" id="inputVersion" placeholder="请输入版本号"
+                           autocomplete="off" class="layui-input-version">
+                </div>
             </div>
             <div class="layui-col-md2">
-                <div class="grid-demo2">
-                    <button class="layui-btn1" id="addversion">新增此版本</button>
+                <div class="grid-demo-opt">
+                    <button class="layui-btn-opt" id="addversion">新增此版本</button>
                 </div>
             </div>
         </div>
@@ -65,30 +67,32 @@
                 <div class="grid-demo-transparent"></div>
             </div>
             <div class="layui-col-md2">
-                <div class="grid-demo1">
-                    <button class="layui-btn2" name="{{version.versionName}}">查看已订阅</button>
+                <div class="grid-demo-view">
+                    <button class="layui-btn-view" name="{{version.versionName}}">查看已订阅</button>
                 </div>
             </div>
             <div class="layui-col-md4">
-                <div class="grid-demo-for"><b>{{version.versionName}}</b></div>
+                <div class="grid-demo-vname">
+                    <b>{{version.versionName}}</b>
+                </div>
             </div>
             {% if "admin" == userAuth %}
             <div class="layui-col-md2">
-                <div class="grid-demo2">
-                    <button class="layui-btn1" name="version_{{version.id}}">删除此版本</button>
+                <div class="grid-demo-opt">
+                    <button class="layui-btn-opt" name="version_{{version.id}}">删除此版本</button>
                 </div>
             </div>
             {% else %}
             {% if version.versionName in acList %}
             <div class="layui-col-md2">
-                <div class="grid-demo2">
-                    <button class="layui-btn1" value="0" name="version_{{version.id}}">取消订阅</button>
+                <div class="grid-demo-opt">
+                    <button class="layui-btn-opt" value="0" name="version_{{version.id}}">取消订阅</button>
                 </div>
             </div>
             {% else %}
             <div class="layui-col-md2">
-                <div class="grid-demo2">
-                    <button class="layui-btn1" value="1" name="version_{{version.id}}">订阅报告</button>
+                <div class="grid-demo-opt">
+                    <button class="layui-btn-opt" value="1" name="version_{{version.id}}">订阅报告</button>
                 </div>
             </div>
             {% endif %}
