@@ -25,7 +25,7 @@ layui.use(['element','layer','jquery'], function () {
     	return
     });
 
-    $('.layui-btn1').on('click',function(){
+    $('.layui-btn-opt').on('click',function(){
     	if (this.id === "addversion") { return };
     	var versionID = this.name.split("_")[1];
     	if ($('#userAuth').val() === "admin") {
@@ -70,7 +70,7 @@ layui.use(['element','layer','jquery'], function () {
     	}
     });
 
-    $('.layui-btn2').on('click',function(){
+    $('.layui-btn-view').on('click',function(){
     	versionName = this.name
     	if ( versionName === "" ){
     	    url = "/viewVersionUsers"
